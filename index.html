@@ -5,15 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>ООО "Море Т" — Профессиональный ремонт корпусов катеров и яхт в Приморском крае</title>
-    <meta name="description" content="Более 10 лет опыта ремонта пластиковых лодок, яхт и катеров во Владивостоке. Любая сложность: от полировки до перестройки рубки.">
+    <meta name="description"
+        content="Более 10 лет опыта ремонта пластиковых лодок, яхт и катеров во Владивостоке. Любая сложность: от полировки до перестройки рубки.">
     <meta property="og:title" content="ООО Море Т — Ремонт катеров и яхт">
-    <meta property="og:description" content="Профессиональный ремонт корпусов из стеклопластика во Владивостоке. 10+ лет опыта.">
+    <meta property="og:description"
+        content="Профессиональный ремонт корпусов из стеклопластика во Владивостоке. 10+ лет опыта.">
     <meta property="og:image" content="hero_bg.png">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
-    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,37 +32,11 @@
 </head>
 
 <body>
-    <div id="preloader" class="preloader"><div class="preloader-inner"><div class="preloader-wave"></div><span>МОРЕ Т</span></div></div>
-    <div id="adminPanel" class="admin-panel">
-        <div class="admin-header">
-            <h3>Настройки калькулятора</h3>
-            <button id="closeAdmin">×</button>
-        </div>
-        <div class="admin-body">
-            <div class="admin-group">
-                <label>Базовая цена (₽/м²)</label>
-                <input type="number" id="basePriceInput" value="5000">
-            </div>
-            <div class="admin-group">
-                <label>Множитель "Яхта"</label>
-                <input type="number" id="yachtMultiplierInput" value="2.5" step="0.1">
-            </div>
-            <div class="admin-group">
-                <label>Множитель "Карбон"</label>
-                <input type="number" id="carbonMultiplierInput" value="1.4" step="0.1">
-            </div>
-            <div class="admin-group">
-                <label>Telegram Bot Token</label>
-                <input type="text" id="botTokenInput" placeholder="123456789:ABCDE...">
-            </div>
-            <div class="admin-group">
-                <label>Telegram Chat ID</label>
-                <input type="text" id="chatIdInput" placeholder="123456789">
-            </div>
-            <button id="saveAdmin" class="btn" style="width: 100%; padding: 10px;">Сохранить</button>
+    <div id="preloader" class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-wave"></div><span>МОРЕ Т</span>
         </div>
     </div>
-    <button id="openAdmin" class="admin-toggle">⚙️</button>
     <header id="header">
         <a href="#" class="logo">МОРЕ<span> Т</span></a>
         <button id="burgerBtn" class="burger" aria-label="Меню">
@@ -77,6 +55,7 @@
     </header>
 
     <section class="hero">
+        <div class="hero-bg"></div>
         <canvas id="waveCanvas" class="hero-waves"></canvas>
         <div class="hero-content">
             <h1 class="reveal">МОРЕ Т: <br>Мастера вашего корпуса</h1>
@@ -98,11 +77,11 @@
                 <div class="service-img" style="background-image: url('process.png');"></div>
                 <div class="service-content">
                     <h3>Простой ремонт</h3>
-                    <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #666;">
-                        <li>• Удаление царапин и сколов</li>
-                        <li>• Заделка трещин и пробоин</li>
-                        <li>• Удаление необрастайки</li>
-                        <li>• Шлифовка и полировка</li>
+                    <ul class="service-list">
+                        <li><i class="fas fa-magic"></i> Удаление царапин и сколов</li>
+                        <li><i class="fas fa-tools"></i> Заделка трещин и пробоин</li>
+                        <li><i class="fas fa-water"></i> Удаление необрастайки</li>
+                        <li><i class="fas fa-gem"></i> Шлифовка и полировка</li>
                     </ul>
                 </div>
             </div>
@@ -110,11 +89,11 @@
                 <div class="service-img" style="background-image: url('epoxy.png');"></div>
                 <div class="service-content">
                     <h3>Сложный ремонт</h3>
-                    <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #666;">
-                        <li>• Удлинение корпуса</li>
-                        <li>• Перестройка рубки</li>
-                        <li>• Усиление люков</li>
-                        <li>• Восстановление геометрии</li>
+                    <ul class="service-list">
+                        <li><i class="fas fa-arrows-alt-h"></i> Удлинение корпуса</li>
+                        <li><i class="fas fa-ship"></i> Перестройка рубки</li>
+                        <li><i class="fas fa-shield-alt"></i> Усиление люков</li>
+                        <li><i class="fas fa-drafting-compass"></i> Восстановление геометрии</li>
                     </ul>
                 </div>
             </div>
@@ -122,11 +101,11 @@
                 <div class="service-img" style="background-image: url('polishing.png');"></div>
                 <div class="service-content">
                     <h3>Покраска и декор</h3>
-                    <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #666;">
-                        <li>• Покраска гелькоутом</li>
-                        <li>• Необрастающая краска</li>
-                        <li>• Индивидуальные переделки</li>
-                        <li>• Любые ваши идеи</li>
+                    <ul class="service-list">
+                        <li><i class="fas fa-paint-brush"></i> Покраска гелькоутом</li>
+                        <li><i class="fas fa-fill-drip"></i> Необрастающая краска</li>
+                        <li><i class="fas fa-palette"></i> Индивидуальные переделки</li>
+                        <li><i class="fas fa-lightbulb"></i> Любые ваши идеи</li>
                     </ul>
                 </div>
             </div>
@@ -190,36 +169,36 @@
                     <div class="input-group">
                         <label>Тип судна</label>
                         <select id="vesselType">
-                            <option value="1">Малый катер (до 5м)</option>
-                            <option value="1.5">Катер (5-8м)</option>
-                            <option value="2.5">Яхта (8-15м)</option>
-                            <option value="4">Крупное судно (15м+)</option>
+
+
+
+
                         </select>
                     </div>
                     <div class="input-group">
                         <label>Характер повреждения</label>
                         <select id="damageType">
-                            <option value="5000">Царапины и потертости</option>
-                            <option value="15000">Мелкие сколы и трещины</option>
-                            <option value="45000">Глубокие пробоины</option>
-                            <option value="30000">Осмос (вздутие)</option>
-                            <option value="10000">Только полировка</option>
+
+
+
+
+
                         </select>
                     </div>
                     <div class="input-group">
                         <label>Материал корпуса</label>
                         <select id="materialType">
-                            <option value="1">Классический стеклопластик</option>
-                            <option value="1.4">Углепластик (Карбон)</option>
-                            <option value="1.2">Кевлар / Гибрид</option>
+
+
+
                         </select>
                     </div>
                     <div class="input-group">
                         <label>Зона ремонта</label>
                         <select id="repairZone">
-                            <option value="1">Надводная часть</option>
-                            <option value="1.25">Ниже ватерлинии</option>
-                            <option value="1.1">Палуба / Интерьер</option>
+
+
+
                         </select>
                     </div>
                     <div class="input-group">
@@ -296,7 +275,11 @@
         <div class="ba-slider reveal" id="baSlider">
             <div class="ba-image ba-after"><img src="after.png" alt="После ремонта" loading="lazy"></div>
             <div class="ba-image ba-before" id="baBefore"><img src="before.png" alt="До ремонта" loading="lazy"></div>
-            <div class="ba-handle" id="baHandle"><div class="ba-handle-line"></div><div class="ba-handle-circle"><i class="fas fa-arrows-alt-h"></i></div><div class="ba-handle-line"></div></div>
+            <div class="ba-handle" id="baHandle">
+                <div class="ba-handle-line"></div>
+                <div class="ba-handle-circle"><i class="fas fa-arrows-alt-h"></i></div>
+                <div class="ba-handle-line"></div>
+            </div>
             <div class="ba-label ba-label-before">ДО</div>
             <div class="ba-label ba-label-after">ПОСЛЕ</div>
         </div>
@@ -364,23 +347,38 @@
         <div class="faq-list">
             <div class="faq-item reveal">
                 <button class="faq-question">Сколько времени занимает ремонт?</button>
-                <div class="faq-answer"><p>Зависит от сложности: мелкие царапины — 1-2 дня, пробоины — 3-7 дней, крупные проекты (удлинение, перестройка рубки) — от 2 недель до 2 месяцев.</p></div>
+                <div class="faq-answer">
+                    <p>Зависит от сложности: мелкие царапины — 1-2 дня, пробоины — 3-7 дней, крупные проекты (удлинение,
+                        перестройка рубки) — от 2 недель до 2 месяцев.</p>
+                </div>
             </div>
             <div class="faq-item reveal">
                 <button class="faq-question">Какая гарантия на работы?</button>
-                <div class="faq-answer"><p>Мы даём гарантию до 2 лет на все виды ремонтных работ. Используем только сертифицированные материалы ведущих производителей.</p></div>
+                <div class="faq-answer">
+                    <p>Мы даём гарантию до 2 лет на все виды ремонтных работ. Используем только сертифицированные
+                        материалы ведущих производителей.</p>
+                </div>
             </div>
             <div class="faq-item reveal">
                 <button class="faq-question">Работаете ли вы с выездом?</button>
-                <div class="faq-answer"><p>Да, наши мобильные бригады работают по всему Приморскому краю. Выезд на осмотр — бесплатно в пределах Владивостока.</p></div>
+                <div class="faq-answer">
+                    <p>Да, наши мобильные бригады работают по всему Приморскому краю. Выезд на осмотр — бесплатно в
+                        пределах Владивостока.</p>
+                </div>
             </div>
             <div class="faq-item reveal">
                 <button class="faq-question">Какие материалы вы используете?</button>
-                <div class="faq-answer"><p>Работаем с полиэфирными и эпоксидными смолами, стеклотканью, углеволокном и кевларом. Все материалы — морского класса, устойчивые к солёной воде и ультрафиолету.</p></div>
+                <div class="faq-answer">
+                    <p>Работаем с полиэфирными и эпоксидными смолами, стеклотканью, углеволокном и кевларом. Все
+                        материалы — морского класса, устойчивые к солёной воде и ультрафиолету.</p>
+                </div>
             </div>
             <div class="faq-item reveal">
                 <button class="faq-question">Можно ли изменить форму корпуса?</button>
-                <div class="faq-answer"><p>Да, мы выполняем кастомизацию: удлинение корпуса, перестройка рубки, изменение обводов, установка новых люков и элементов. Проектируем совместно с вами.</p></div>
+                <div class="faq-answer">
+                    <p>Да, мы выполняем кастомизацию: удлинение корпуса, перестройка рубки, изменение обводов, установка
+                        новых люков и элементов. Проектируем совместно с вами.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -458,19 +456,25 @@
     <!-- Floating Messenger -->
     <div class="floating-messenger" id="floatingMsg">
         <div class="fm-options" id="fmOptions">
-            <a href="https://t.me/MoreT25remont" target="_blank" class="fm-opt tg"><i class="fab fa-telegram-plane"></i><span>Telegram</span></a>
-            <a href="https://wa.me/79000000000" target="_blank" class="fm-opt wa"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+            <a href="https://t.me/MoreT25remont" target="_blank" class="fm-opt tg"><i
+                    class="fab fa-telegram-plane"></i><span>Telegram</span></a>
+            <a href="https://wa.me/79000000000" target="_blank" class="fm-opt wa"><i
+                    class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
         </div>
         <button class="fm-btn" id="fmBtn">
-            <svg class="fm-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            <svg class="fm-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                </path>
             </svg>
         </button>
     </div>
 
     <!-- Scroll to Top -->
     <button id="scrollTop" class="scroll-top" aria-label="Наверх">
-        <svg class="st-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="st-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
     </button>
@@ -498,6 +502,7 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script src="main.js"></script>
 </body>
 

@@ -165,43 +165,44 @@ if (scrollTopBtn) {
     });
 }
 
-// ============ ADMIN PANEL ============
-const adminPanel = document.getElementById('adminPanel');
-const openAdminBtn = document.getElementById('openAdmin');
-const closeAdminBtn = document.getElementById('closeAdmin');
-const saveAdminBtn = document.getElementById('saveAdmin');
-
+// ============ CONFIGURATION ============
 let config = {
-    basePrice: 5000,
-    yachtMultiplier: 2.5,
-    carbonMultiplier: 1.4,
-    botToken: '',
-    chatId: ''
+    basePrice: (typeof TG_CONFIG !== 'undefined' && TG_CONFIG.basePrice) ? TG_CONFIG.basePrice : 5000,
+    botToken: (typeof TG_CONFIG !== 'undefined' && TG_CONFIG.botToken) ? TG_CONFIG.botToken : '',
+    chatId: (typeof TG_CONFIG !== 'undefined' && TG_CONFIG.chatId) ? TG_CONFIG.chatId : ''
 };
 
 const savedConfig = localStorage.getItem('marineRepairConfig');
 if (savedConfig) {
-    config = JSON.parse(savedConfig);
-    document.getElementById('basePriceInput').value = config.basePrice || 5000;
-    document.getElementById('yachtMultiplierInput').value = config.yachtMultiplier || 2.5;
-    document.getElementById('carbonMultiplierInput').value = config.carbonMultiplier || 1.4;
-    document.getElementById('botTokenInput').value = config.botToken || '';
-    document.getElementById('chatIdInput').value = config.chatId || '';
+    const parsed = JSON.parse(savedConfig);
+    if (parsed.basePrice) config.basePrice = parsed.basePrice;
+    if (parsed.botToken) config.botToken = parsed.botToken;
+    if (parsed.chatId) config.chatId = parsed.chatId;
 }
 
-if (openAdminBtn) openAdminBtn.addEventListener('click', () => adminPanel.classList.add('active'));
-if (closeAdminBtn) closeAdminBtn.addEventListener('click', () => adminPanel.classList.remove('active'));
-if (saveAdminBtn) saveAdminBtn.addEventListener('click', () => {
-    config.basePrice = parseFloat(document.getElementById('basePriceInput').value);
-    config.yachtMultiplier = parseFloat(document.getElementById('yachtMultiplierInput').value);
-    config.carbonMultiplier = parseFloat(document.getElementById('carbonMultiplierInput').value);
-    config.botToken = document.getElementById('botTokenInput').value;
-    config.chatId = document.getElementById('chatIdInput').value;
-    localStorage.setItem('marineRepairConfig', JSON.stringify(config));
-    calculatePrice();
-    adminPanel.classList.remove('active');
-    alert('Настройки сохранены!');
-});
+// ============ DYNAMIC CALCULATOR INIT ============
+function initCalculator() {
+    if (typeof TG_CONFIG === 'undefined') return;
+
+    const populate = (id, data, isPrice = false) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.innerHTML = '';
+        data.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = isPrice ? item.price : item.multiplier;
+            opt.textContent = item.name;
+            el.appendChild(opt);
+        });
+    };
+
+    if (TG_CONFIG.vesselTypes) populate('vesselType', TG_CONFIG.vesselTypes);
+    if (TG_CONFIG.damageTypes) populate('damageType', TG_CONFIG.damageTypes, true);
+    if (TG_CONFIG.materialTypes) populate('materialType', TG_CONFIG.materialTypes);
+    if (TG_CONFIG.repairZones) populate('repairZone', TG_CONFIG.repairZones);
+
+    calculatePrice(true);
+}
 
 // ============ CALCULATOR ============
 const vesselType = document.getElementById('vesselType');
@@ -254,12 +255,25 @@ function animateValue(obj, start, end, duration) {
         el.addEventListener('input', () => calculatePrice(false));
     }
 });
-calculatePrice(true);
+
+// Запускаем инициализацию калькулятора из конфига
+initCalculator();
 
 // ============ PARALLAX ============
 window.addEventListener('scroll', () => {
     const calcBg = document.querySelector('.calc-parallax-bg');
     if (calcBg) calcBg.style.transform = `translate3d(0, ${window.pageYOffset * 0.1}px, 0)`;
+
+    const hero = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+    if (hero && heroContent) {
+        const scrolled = window.pageYOffset;
+        if (scrolled < window.innerHeight) {
+            hero.style.backgroundPositionY = `${50 + (scrolled * 0.05)}%`;
+            heroContent.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0)`;
+            heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
+        }
+    }
 });
 
 // ============ TOAST NOTIFICATIONS ============
@@ -447,13 +461,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const targetId = this.getAttribute('href');
         if (targetId === '#' || !targetId.startsWith('#')) return;
-        
+
         const target = document.querySelector(targetId);
         if (target) {
             e.preventDefault();
             const header = document.getElementById('header');
             const offset = (header ? header.offsetHeight : 80) + 20;
-            
+
             const scrollToTarget = () => {
                 const bodyRect = document.body.getBoundingClientRect().top;
                 const elementRect = target.getBoundingClientRect().top;
@@ -467,32 +481,44 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             };
 
             scrollToTarget();
-            // Multi-stage check for late layout shifts
-            setTimeout(scrollToTarget, 400);
-            setTimeout(scrollToTarget, 800);
-            setTimeout(scrollToTarget, 1500); setTimeout(scrollToTarget, 2500);
+            // Removed multiple setTimeouts that caused the "snap back" bug
         }
     });
 });
 
-// ============ 2GIS MAP ============
-if (typeof DG !== 'undefined') {
-    DG.then(function() {
-        const map = DG.map('map', {
-            center: [43.091544, 131.957283], // Улица Катерная, 2
-            zoom: 16,
-            scrollWheelZoom: false
-        });
-        
-        const myIcon = DG.divIcon({
-            className: 'custom-map-marker',
-            html: '<div style="width: 24px; height: 24px; background: #c5a059; border-radius: 50%; border: 4px solid #050a14; box-shadow: 0 0 15px rgba(197,160,89,0.8);"></div>',
-            iconSize: [24, 24],
-            iconAnchor: [12, 12]
-        });
+// ============ 2GIS MAP DYNAMIC LOADER ============
+function initMap() {
+    const mapContainer = document.getElementById('map');
+    if (!mapContainer) return;
 
-        DG.marker([43.091544, 131.957283], {icon: myIcon})
-          .addTo(map)
-          .bindPopup('<div style="color: #050a14; font-weight: 800; font-family: Outfit, sans-serif; padding: 5px;">ООО "Море Т"<br><span style="font-weight: 400; color: #666;">Мастерская</span></div>');
-    });
+    const apiKey = (typeof TG_CONFIG !== 'undefined' && TG_CONFIG.mapsApiKey) ? TG_CONFIG.mapsApiKey : '';
+    const script = document.createElement('script');
+    script.src = `https://maps.api.2gis.ru/2.0/loader.js?pkg=full&key=${apiKey}`;
+
+    script.onload = () => {
+        if (typeof DG !== 'undefined') {
+            DG.then(function () {
+                const map = DG.map('map', {
+                    center: [43.091544, 131.957283], // Улица Катерная, 2
+                    zoom: 16,
+                    scrollWheelZoom: false
+                });
+
+                const myIcon = DG.divIcon({
+                    className: 'custom-map-marker',
+                    html: '<div style="width: 24px; height: 24px; background: #c5a059; border-radius: 50%; border: 4px solid #050a14; box-shadow: 0 0 15px rgba(197,160,89,0.8);"></div>',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12]
+                });
+
+                DG.marker([43.091544, 131.957283], { icon: myIcon })
+                    .addTo(map)
+                    .bindPopup('<div style="color: #050a14; font-weight: 800; font-family: Outfit, sans-serif; padding: 5px;">ООО "Море Т"<br><span style="font-weight: 400; color: #666;">Мастерская</span></div>');
+            });
+        }
+    };
+    document.head.appendChild(script);
 }
+
+// Запускаем загрузку карты
+initMap();
