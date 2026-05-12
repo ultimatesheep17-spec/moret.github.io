@@ -82,8 +82,8 @@
             <h1 class="reveal">МОРЕ Т: <br>Мастера вашего корпуса</h1>
             <p class="reveal" id="heroSubtitle"></p>
             <div class="reveal hero-buttons">
-                <a href="#calculator" class="btn">Рассчитать стоимость</a>
-                <a href="#contact" class="btn btn-outline">Обсудить проект</a>
+                <a href="#calculatorContainer" class="btn">Рассчитать стоимость</a>
+                <a href="#contactForm" class="btn btn-outline">Обсудить проект</a>
             </div>
         </div>
     </section>
@@ -185,7 +185,7 @@
                 <h2>Калькулятор стоимости</h2>
                 <p>Узнайте ориентировочную цену ремонта онлайн</p>
             </div>
-            <div class="calculator-container reveal">
+            <div id="calculatorContainer" class="calculator-container reveal" style="scroll-margin-top: 120px;">
                 <div class="calc-form">
                     <div class="input-group">
                         <label>Тип судна</label>
@@ -417,7 +417,7 @@
                     </div>
                 </div>
             </div>
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" style="scroll-margin-top: 120px;">
                 <input type="text" id="contactName" placeholder="Ваше имя" required>
                 <input type="tel" id="contactPhone" placeholder="Номер телефона" required>
                 <textarea id="contactMessage" placeholder="Опишите задачу или тип судна" rows="4"></textarea>

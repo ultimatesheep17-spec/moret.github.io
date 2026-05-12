@@ -441,12 +441,37 @@ window.addEventListener('click', (e) => {
     }
 });
 
-// ============ SMOOTH SCROLL ============
+
+// ============ ROBUST SMOOTH SCROLL ============
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        const targetId = this.getAttribute('href');
+        if (targetId === '#' || !targetId.startsWith('#')) return;
+        
+        const target = document.querySelector(targetId);
+        if (target) {
+            e.preventDefault();
+            const header = document.getElementById('header');
+            const offset = (header ? header.offsetHeight : 80) + 20;
+            
+            const scrollToTarget = () => {
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = target.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            };
+
+            scrollToTarget();
+            // Multi-stage check for late layout shifts
+            setTimeout(scrollToTarget, 400);
+            setTimeout(scrollToTarget, 800);
+            setTimeout(scrollToTarget, 1500); setTimeout(scrollToTarget, 2500);
+        }
     });
 });
 
